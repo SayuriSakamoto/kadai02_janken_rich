@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>骨格診断サイト</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>骨格診断サイト</h1>
+        </nav>
+    </header>
+    
+    <main class="content">
+        <section class="diagnosis-section">
+           <div id="title"><h2>骨格診断</h2>
+            <p> 骨格タイプを自己診断！ タイプによって似合うスタイルの参考にしてね！</p>
+    　　　　<p></p>
+                <p>次の項目で当てはまるものを選択して下さい。 </p></div> 
+
+            <!-- 質問フォーム -->
+            <form id="diagnosisForm">
+                <div class="question">
+                    <p>1. 肩幅は広い方ですか？</p>
+                    <label><input type="radio" name="q1" value="yes"> はい</label>
+                    <label><input type="radio" name="q1" value="no"> いいえ</label>
+                </div>
+                <div class="question">
+                    <p>2. ウエストラインははっきりしていますか？</p>
+                    <label><input type="radio" name="q2" value="yes"> はい</label>
+                    <label><input type="radio" name="q2" value="no"> いいえ</label>
+                </div>
+                <div class="question">
+                    <p>3. 骨が目立ちますか？</p>
+                    <label><input type="radio" name="q3" value="yes"> はい</label>
+                    <label><input type="radio" name="q3" value="no"> いいえ</label>
+                </div>
+                <div class="question">
+                    <p>4. 体全体が丸みを帯びていますか？</p>
+                    <label><input type="radio" name="q4" value="yes"> はい</label>
+                    <label><input type="radio" name="q4" value="no"> いいえ</label>
+                </div>
+                <div class="question">
+                    <p>5. 筋肉質な体型ですか？</p>
+                    <label><input type="radio" name="q5" value="yes"> はい</label>
+                    <label><input type="radio" name="q5" value="no"> いいえ</label>
+                </div>
+                <button type="submit">診断する</button>
+            </form>
+
+            <!-- 診断結果表示 -->
+            <div id="result" style="display: none;">
+                <h2>診断結果</h2>
+                <p>あなたの骨格タイプは <span id="boneType">---</span> です。</p>
+                <p id="boneDescription"></p>
+                <button id="retryButton">もう一度診断する</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 骨格診断サイト. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <script>
+    document.getElementById('diagnosisForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+    
+        // 各質問の回答を取得
+        const q1 = document.querySelector('input[name="q1"]:checked').value;
+        const q2 = document.querySelector('input[name="q2"]:checked').value;
+        const q3 = document.querySelector('input[name="q3"]:checked').value;
+        const q4 = document.querySelector('input[name="q4"]:checked').value;
+        const q5 = document.querySelector('input[name="q5"]:checked').value;
+    
+        // 仮の診断ロジック
+        let boneType = "";
+        let boneDescription = "";
+    
+        if (q1 === "yes" && q5 === "yes") {
+            boneType = "ストレート";
+            boneDescription = "ストレートタイプは、肩幅が広く、全体的に筋肉質な体型です。体そのものに存在感があるので、できるだけシンプルにまとめた引き算スタイルがよく似合います。コーディネートは縦長のIラインを作ると、厚みのある体をスッキリと見せることができ、あか抜けた着こなしに。";
+        } else if (q3 === "yes" && q2 === "no") {
+            boneType = "ナチュラル";
+            boneDescription = "ナチュラルタイプは、骨が目立ち、ウエストがはっきりしていない体型です。肩幅が広めで骨格がしっかりしているため、上下どちらかにボリュームを出したA or Yラインを意識してコーディネートするとバランスが取れます。";
+        } else {
+            boneType = "ウェーブ";
+            boneDescription = "ウェーブタイプは、柔らかい曲線を持つ体型で、肩幅が狭く、ウエストがはっきりしています。アルファベットの「X」ラインを意識して、美しいウエストのくびれを強調し、シルエットにメリハリをつけるとスタイルアップします。";
+        }
+    
+        // 結果を表示
+        document.getElementById('title').style.display = 'none';
+
+        document.getElementById('boneType').textContent = boneType;
+        document.getElementById('boneDescription').textContent = boneDescription;
+        document.getElementById('diagnosisForm').style.display = 'none';
+        document.getElementById('result').style.display = 'block';
+
+        document.getElementById('retryButton').addEventListener('click', function() {
+        // フォームをリセット
+        document.getElementById('diagnosisForm').reset();
+        document.getElementById('diagnosisForm').style.display = 'block';
+        document.getElementById('result').style.display = 'none';
+    });
+});
+</script>
+</body>
+</html>
